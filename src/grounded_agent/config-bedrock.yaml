@@ -14,6 +14,7 @@ guardrails:
       guardrailVersion: os.environ/BEDROCK_GUARDRAIL_VERSION
       aws_region_name: os.environ/AWS_REGION_NAME
       contextual_grounding_from_messages: true
+      outputScope: FULL
 
 general_settings:
   master_key: os.environ/LITELLM_API_KEY

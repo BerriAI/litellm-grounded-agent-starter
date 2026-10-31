@@ -27,7 +27,7 @@ dev = [
 ]
 
 [tool.uv.sources]
-litellm = { url = "https://github.com/BerriAI/litellm/archive/214f5eaa36c301cef7526d7595fe9adec5d55b4f.tar.gz" }
+litellm = { url = "https://github.com/BerriAI/litellm/archive/8a7714d0dc678e63d9dd7eff525c399e88937366.tar.gz" }
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/grounded_agent"]

@@ -1846,7 +1846,7 @@ wheels = [
 [[package]]
 name = "litellm"
 version = "1.109.0"
-source = { url = "https://github.com/BerriAI/litellm/archive/214f5eaa36c301cef7526d7595fe9adec5d55b4f.tar.gz" }
+source = { url = "https://github.com/BerriAI/litellm/archive/8a7714d0dc678e63d9dd7eff525c399e88937366.tar.gz" }
 dependencies = [
     { name = "aiohttp" },
     { name = "anyio" },
@@ -1873,7 +1873,7 @@ dependencies = [
     { name = "tokenizers" },
     { name = "typing-extensions" },
 ]
-sdist = { hash = "sha256:e1bafa77ea07bc5898aaefd2a270258cd89b53530feceb09d32fcadf227e2f59" }
+sdist = { hash = "sha256:619fe14a21034f764b0e1c814cfdee9f5e56c145b599d31e81567e1a6f281de2" }
 
 [package.optional-dependencies]
 proxy = [
@@ -2067,7 +2067,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", specifier = ">=0.136.3,<1" },
-    { name = "litellm", extras = ["proxy"], url = "https://github.com/BerriAI/litellm/archive/214f5eaa36c301cef7526d7595fe9adec5d55b4f.tar.gz" },
+    { name = "litellm", extras = ["proxy"], url = "https://github.com/BerriAI/litellm/archive/8a7714d0dc678e63d9dd7eff525c399e88937366.tar.gz" },
     { name = "uvicorn", specifier = ">=0.33,<1" },
 ]
 

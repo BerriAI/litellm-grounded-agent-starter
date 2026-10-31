@@ -39,7 +39,7 @@ If the default ports are in use, choose another pair:
 uv run grounded-agent-demo --chat-port 8512 --gateway-port 4010
 ```
 
-The SDK and gateway changes for [LiteLLM issue #49217](https://github.com/BerriAI/litellm/issues/49217) are not yet in a released package. `pyproject.toml` pins both to [the implementation commit](https://github.com/BerriAI/litellm/commit/214f5eaa36c301cef7526d7595fe9adec5d55b4f). Installing this source dependency requires LiteLLM's native build prerequisites, including a Rust toolchain. After the feature ships, replace the source pin with the released LiteLLM version.
+The SDK and gateway changes for [LiteLLM issue #49217](https://github.com/BerriAI/litellm/issues/49217) are not yet in a released package. `pyproject.toml` pins both to [the implementation commit](https://github.com/BerriAI/litellm/commit/8a7714d0dc678e63d9dd7eff525c399e88937366). Installing this source dependency requires LiteLLM's native build prerequisites, including a Rust toolchain. After the feature ships, replace the source pin with the released LiteLLM version.
 
 ## Use Amazon Bedrock for managed grounding
 
@@ -72,7 +72,7 @@ uv run --env-file "$HOME/.config/litellm-grounded-agent/bedrock.env" \
   --host 127.0.0.1 --port 8502
 ```
 
-`GROUNDING_PROVIDER=bedrock` selects the application's Bedrock result adapter. `contextual_grounding_from_messages: true` tells LiteLLM to use the system message as reference evidence and the user message as the query. The starter sends the retrieved documents in that system message, the current question in the user message, and the answer through `response=`.
+`GROUNDING_PROVIDER=bedrock` selects the application's Bedrock result adapter. `contextual_grounding_from_messages: true` tells LiteLLM to use the system message as reference evidence and the user message as the query. The starter sends the retrieved documents in that system message, the current question in the user message, and the answer through `response=`. The configuration also requests `outputScope: FULL` so Bedrock includes grounding assessments for supported answers. Without it, AWS returns detected findings only. See [AWS response scope](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-use-independent-api.html).
 
 The SDK returns AWS's native structured findings. `parse_verdict` in `results.py` reads `assessments[].contextualGroundingPolicy.filters`, requires a `GROUNDING` assessment, and checks its score, threshold, and detection flag. It does not infer success from the overall `action`: a report-only guardrail can return `NONE` alongside a negative finding. Missing assessments produce “Grounding check unavailable.”
 
