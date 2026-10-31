@@ -1,0 +1,17 @@
+model_list:
+  - model_name: agent
+    litellm_params:
+      model: os.environ/AGENT_MODEL
+      api_key: os.environ/OPENAI_API_KEY
+
+guardrails:
+  - guardrail_name: answer-grounding
+    litellm_params:
+      guardrail: grounded_agent.grounding.WorkplaceGrounding
+      mode: post_call
+      default_on: false
+      judge_model: os.environ/GROUNDING_JUDGE_MODEL
+      judge_api_key: os.environ/OPENAI_API_KEY
+
+general_settings:
+  master_key: os.environ/LITELLM_API_KEY

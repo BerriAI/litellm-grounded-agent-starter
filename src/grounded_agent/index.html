@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grounded answers · LiteLLM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;550;600;650;700&display=swap" rel="stylesheet">
+  <style>
+    :root{font-family:"DM Sans",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#202328;background:#fff;font-synthesis:none}
+    *{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.55}
+    .shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh}.sidebar{background:#f7f8fa;border-right:1px solid #e9eaed;padding:30px 21px;display:flex;flex-direction:column;gap:38px}
+    .brand{display:flex;align-items:center;gap:9px;font-size:22px;font-weight:650;letter-spacing:-.8px}.brand-mark{width:27px;height:27px;background:#202329;border-radius:7px;color:white;display:grid;place-items:center;font-size:20px;font-weight:700}
+    .label{font-size:10px;font-weight:650;letter-spacing:1.35px;text-transform:uppercase;color:#969aa3;margin:0 0 14px}.nav-item{display:flex;gap:11px;align-items:center;padding:11px 13px;background:white;border:1px solid #e4e6ea;border-radius:8px;font-size:12px;font-weight:550;box-shadow:0 1px 2px #18181b04}.nav-item svg{color:#263cdb}
+    .library{display:flex;flex-direction:column;gap:16px}.library-item{display:flex;align-items:flex-start;gap:10px;font-size:11px;line-height:1.45;color:#686d78}.library-item svg{flex-shrink:0;color:#a2a7af;margin-top:1px}.library-item small{display:block;font-size:10px;color:#a1a6ae;margin-top:2px}
+    .sidebar-bottom{margin-top:auto;border-top:1px solid #e4e6eb;padding-top:18px;color:#8f949d;font-size:10px;line-height:1.7}.sidebar-bottom strong{display:block;color:#636973;font-weight:550}
+    .workspace{min-width:0}.topbar{height:72px;border-bottom:1px solid #eceef1;display:flex;align-items:center;justify-content:space-between;padding:0 38px;font-size:11px;color:#91959d}.breadcrumb{display:flex;gap:12px;align-items:center}.breadcrumb strong{font-weight:500;color:#4d535d}.mode{display:flex;align-items:center;gap:7px;border:1px solid #e5e7eb;padding:6px 9px;border-radius:6px;font-size:10px;color:#7b818d}.mode-dot{width:5px;height:5px;border-radius:50%;background:#a5a9b3}
+    main{max-width:1060px;margin:0 auto;padding:47px 44px 25px}.eyebrow{display:flex;align-items:center;gap:7px;color:#707584;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase}.eyebrow svg{color:#263cdb}h1{font-size:30px;letter-spacing:-1.1px;margin:11px 0 9px;font-weight:580;line-height:1.2}.subtitle{font-size:12px;line-height:1.7;color:#858b96;max-width:560px;margin:0}
+    .chat-layout{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:32px;margin-top:34px}.conversation{min-width:0}.thread{display:flex;flex-direction:column;gap:26px;min-height:240px}.empty{border:1px dashed #e0e3e9;border-radius:12px;padding:27px 24px;color:#8c919d;font-size:12px;line-height:1.8}.empty strong{display:block;color:#555c68;font-size:13px;font-weight:500;margin-bottom:5px}
+    .user-message{display:flex;justify-content:flex-end}.user-bubble{background:#f3f4f7;border:1px solid #eceef2;border-radius:12px 12px 3px 12px;padding:12px 16px;font-size:12px;color:#3f4651;line-height:1.65;max-width:90%}.assistant{display:grid;grid-template-columns:27px minmax(0,1fr);gap:11px}.avatar{width:27px;height:27px;border:1px solid #e4e6eb;border-radius:7px;display:grid;place-items:center;color:#263cdb;background:#fafaff}.assistant-name{font-size:11px;font-weight:600;color:#444b56;margin-top:6px;margin-bottom:10px}.answer{font-size:13px;line-height:1.85;color:#535b68;white-space:pre-line;margin:0}
+    .verdict{margin-top:17px;padding:13px 14px;border:1px solid #d8eade;border-radius:9px;background:#f5fbf6}.verdict-title{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:#278342}.verdict p{font-size:10px;line-height:1.7;color:#6d8273;margin:7px 0 0}.verdict.unsupported{background:#fffbf1;border-color:#eee2bf}.verdict.unsupported .verdict-title{color:#a2731b}.verdict.unsupported p{color:#938469}.verdict.unavailable{background:#f7f8fa;border-color:#e2e5ea}.verdict.unavailable .verdict-title,.verdict.unavailable p{color:#7b818d}
+    .sources{margin-top:10px}.sources-label{font-size:10px;color:#858b97;margin:12px 0 3px}.source{background:white;border:1px solid #e7e9ee;border-radius:7px;margin-top:7px}.source summary{padding:9px 11px;font-size:10px;color:#6b7280;cursor:pointer}.source p{margin:0;padding:0 11px 11px;font-size:10px;line-height:1.75;color:#8c929c}
+    .how{border-left:1px solid #eceef1;padding-left:24px}.how .label{margin-top:4px}.step{display:grid;grid-template-columns:20px 1fr;gap:8px;margin:19px 0}.step-number{font-size:9px;color:#9ca2ad;border:1px solid #e7e9ed;border-radius:5px;height:19px;display:grid;place-items:center}.step strong{display:block;font-size:11px;color:#626a77;font-weight:500;margin-bottom:5px}.step p{font-size:10px;line-height:1.75;color:#979da7;margin:0}.how-note{font-size:10px;line-height:1.9;color:#a2a7af;padding-top:15px;border-top:1px solid #eceef1}.how-note code{font-size:9px;color:#858b97;background:#f7f8fa;padding:2px 4px;border-radius:3px}
+    .suggestions{display:flex;gap:7px;flex-wrap:wrap;margin:27px 0 13px}.suggestion{background:white;border:1px solid #e5e7ec;border-radius:6px;padding:7px 10px;color:#858b97;font-size:10px}.suggestion:hover{border-color:#a5a7ed;color:#263cdb}.composer{padding:11px 11px 11px 15px;border:1px solid #dfe2e9;border-radius:11px;box-shadow:0 3px 12px #242a3805;display:flex;gap:12px;align-items:flex-end}.composer textarea{border:0;outline:none;resize:none;width:100%;padding:3px 0;color:#555e6c;background:white;font-size:12px;line-height:1.7;min-height:43px}.composer textarea::placeholder{color:#abb0ba}.send{width:30px;height:30px;flex-shrink:0;border:0;border-radius:7px;background:#20252e;color:white;display:grid;place-items:center}.footnote{font-size:9px;color:#a8adb6;text-align:center;margin:11px 0 0}.footer{margin-top:27px;padding-top:17px;border-top:1px solid #eef0f3;font-size:9px;color:#a4a9b2;display:flex;justify-content:space-between}.footer span:last-child{color:#8f95a0}
+    svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.loading{color:#8d94a1;font-size:11px;padding-top:6px}.error{padding:12px 15px;background:#fff7f4;border:1px solid #f0ded7;color:#9d7667;border-radius:8px;font-size:12px}
+    @media(min-width:1500px){main{padding-top:65px}.chat-layout{margin-top:43px}.thread{min-height:300px}}
+    @media(max-width:1000px){.chat-layout{grid-template-columns:1fr}.how{display:none}main{padding:34px 28px}.sidebar{width:200px}.shell{grid-template-columns:200px minmax(0,1fr)}}
+    @media(max-width:650px){.sidebar{display:none}.shell{display:block}.topbar{height:58px;padding:0 20px}main{padding:30px 20px}h1{font-size:27px}.assistant{grid-template-columns:23px 1fr;gap:9px}.avatar{width:23px;height:23px}.user-bubble{font-size:12px}.footer{gap:15px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Workspace">
+      <div class="brand"><img src="/brand.svg" alt="" width="27" height="27"> LiteLLM</div>
+      <div><p class="label">Workspace</p><div class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7A8.4 8.4 0 0 1 4 11.5a8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>Grounded answers</div></div>
+      <div><p class="label">Knowledge base</p><div class="library" id="library"></div></div>
+      <div class="sidebar-bottom"><strong>Your documents. Your guardrail.</strong>A starter you can adapt to your workplace.</div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><div class="breadcrumb"><span>Examples</span><span>/</span><strong>Grounded agent</strong></div><span class="mode" id="mode"><span class="mode-dot"></span>Connected to your gateway</span></header>
+      <main>
+        <div class="eyebrow"><svg viewBox="0 0 24 24"><path d="m12 3 8 4v5c0 5-8 9-8 9s-8-4-8-9V7z"/><path d="m8 12 3 3 5-6"/></svg>Agent starter</div>
+        <h1>Answers you can check.</h1>
+        <p class="subtitle">Ask your workplace documents a question. See the answer, the grounding verdict, and the evidence behind it.</p>
+        <div class="chat-layout">
+          <section class="conversation" aria-label="Grounded chat">
+            <div class="thread" id="thread" role="log" aria-live="polite"><div class="empty" id="empty"><strong>Start with a question about your workplace.</strong>Your agent searches the documents, writes an answer, and checks its claims against the retrieved evidence.</div></div>
+            <div class="suggestions"><button class="suggestion" data-question="How much can I spend on my home office?">Home office allowance</button><button class="suggestion" data-question="How many days can I work remotely?">Remote work policy</button><button class="suggestion" data-question="Do we get unlimited remote work?">Check an unsupported answer</button></div>
+            <form class="composer" id="composer"><textarea id="question" rows="2" aria-label="Ask your documents" placeholder="Ask your documents a question…" required maxlength="2000"></textarea><button class="send" type="submit" aria-label="Send question"><svg viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form>
+            <p class="footnote">Grounding checks support against these documents. They do not verify that the documents are correct.</p>
+          </section>
+          <aside class="how" aria-label="How grounding works"><p class="label">One answer. One check.</p><div class="step"><span class="step-number">1</span><div><strong>Retrieve evidence</strong><p>The agent searches the workplace knowledge base.</p></div></div><div class="step"><span class="step-number">2</span><div><strong>Write an answer</strong><p>Your configured model answers using those sources.</p></div></div><div class="step"><span class="step-number">3</span><div><strong>Check grounding</strong><p>Your guardrail returns a verdict and supporting source IDs.</p></div></div><p class="how-note">The final check uses<br><code>litellm.guardrails.apply()</code><br>with the answer and its evidence.</p></aside>
+        </div>
+        <footer class="footer"><span>Built with the LiteLLM SDK</span><span>Fork the starter. Bring your own documents.</span></footer>
+      </main>
+    </div>
+  </div>
+  <script>
+    const thread=document.getElementById('thread');
+    const question=document.getElementById('question');
+    const form=document.getElementById('composer');
+    const send=form.querySelector('button');
+    const icon='<svg viewBox="0 0 24 24"><path d="m12 3 8 4v5c0 5-8 9-8 9s-8-4-8-9V7z"/><path d="m8 12 3 3 5-6"/></svg>';
+    const fileIcon='<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h5"/></svg>';
+    function text(tag,className,content){const node=document.createElement(tag);node.className=className;node.textContent=content;return node;}
+    function sourceCard(source){const details=document.createElement('details');details.className='source';details.append(text('summary','',source.title),text('p','',source.content));return details;}
+    function renderResult(result){
+      const row=document.createElement('article');row.className='assistant';
+      const avatar=document.createElement('div');avatar.className='avatar';avatar.innerHTML=icon;
+      const body=document.createElement('div');body.append(text('div','assistant-name','Workplace assistant'),text('p','answer',result.answer));
+      const card=document.createElement('div');card.className='verdict '+result.status;
+      const labels={grounded:'Grounded in your documents',unsupported:'Not supported by your documents',unavailable:'Grounding check unavailable'};
+      const title=text('div','verdict-title',labels[result.status]||labels.unavailable);
+      const check=document.createElement('span');check.innerHTML=icon;title.prepend(check);
+      card.append(title,text('p','',result.verdict?.reason||'The check did not return a valid verdict. This answer has no grounding badge.'));
+      body.append(card);
+      if(result.verdict?.source_ids?.length){const sources=document.createElement('div');sources.className='sources';sources.append(text('div','sources-label',result.evidence_type==='checked'?'Documents checked':'Sources referenced by check'));result.sources.filter(source=>result.verdict.source_ids.includes(source.id)).forEach(source=>sources.append(sourceCard(source)));body.append(sources);}
+      row.append(avatar,body);thread.append(row);
+    }
+    async function ask(value){
+      if(send.disabled||!value.trim())return;
+      document.getElementById('empty')?.remove();
+      const user=document.createElement('div');user.className='user-message';user.append(text('div','user-bubble',value));thread.append(user);
+      question.value='';send.disabled=true;question.disabled=true;
+      const loading=text('div','loading','Retrieving evidence and checking your answer…');thread.append(loading);
+      try{const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:value})});if(!response.ok)throw new Error('The agent could not answer. Check the server configuration and try again.');renderResult(await response.json());}
+      catch(error){thread.append(text('div','error',error.message));}
+      finally{loading.remove();send.disabled=false;question.disabled=false;question.focus();}
+    }
+    form.addEventListener('submit',event=>{event.preventDefault();ask(question.value);});
+    question.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();form.requestSubmit();}});
+    document.querySelectorAll('[data-question]').forEach(button=>button.addEventListener('click',()=>ask(button.dataset.question)));
+    fetch('/api/documents').then(response=>response.json()).then(data=>{
+      data.sources.forEach(source=>{const row=document.createElement('div');row.className='library-item';const symbol=document.createElement('span');symbol.innerHTML=fileIcon;const label=text('div','',source.title);label.append(text('small','','Sample document'));row.append(symbol,label);document.getElementById('library').append(row);});
+      if(data.demo){document.getElementById('mode').innerHTML='<span class="mode-dot"></span>Fixture demo · No external model calls';}
+    }).catch(()=>{document.getElementById('mode').textContent='Knowledge base unavailable';});
+  </script>
+</body>
+</html>

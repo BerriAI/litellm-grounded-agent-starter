@@ -1,0 +1,17 @@
+[
+  {
+    "id": "remote-work",
+    "title": "Remote work handbook",
+    "content": "Employees can work remotely up to three days each week. Teams meet in the office on Tuesdays and Thursdays. A manager can approve an exception for a specific week."
+  },
+  {
+    "id": "home-office",
+    "title": "Home office equipment policy",
+    "content": "Employees receive a one-time home office equipment allowance of $500. Submit receipts within 30 days of purchase. The allowance covers a desk, chair, monitor, keyboard, or mouse."
+  },
+  {
+    "id": "time-off",
+    "title": "Time off guide",
+    "content": "Full-time employees receive 20 days of paid time off each calendar year. Request planned leave at least two weeks in advance. Up to five unused days carry over into the next year."
+  }
+]

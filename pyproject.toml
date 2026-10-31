@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "litellm-grounded-agent-starter"
+version = "0.1.0"
+description = "A chat agent that checks answers against retrieved documents through LiteLLM."
+readme = "README.md"
+requires-python = ">=3.10,<3.16"
+license = "MIT"
+dependencies = [
+    "litellm[proxy]",
+    "fastapi>=0.136.3,<1",
+    "uvicorn>=0.33,<1",
+]
+
+[project.scripts]
+grounded-agent-demo = "grounded_agent.demo:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8,<10",
+    "pytest-asyncio>=0.25,<2",
+    "ruff>=0.11,<1",
+    "basedpyright>=1.29,<2",
+]
+
+[tool.uv.sources]
+litellm = { url = "https://github.com/BerriAI/litellm/archive/214f5eaa36c301cef7526d7595fe9adec5d55b4f.tar.gz" }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/grounded_agent"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC"]
+
+[tool.basedpyright]
+include = ["src", "tests"]
+typeCheckingMode = "strict"
+pythonVersion = "3.10"
+reportAny = false
+reportExplicitAny = false
+reportMissingTypeStubs = false

@@ -1,0 +1,19 @@
+model_list:
+  - model_name: agent
+    litellm_params:
+      model: openai/fixture-agent
+      api_base: os.environ/GROUNDING_FIXTURE_API_BASE
+      api_key: fixture-only
+
+guardrails:
+  - guardrail_name: answer-grounding
+    litellm_params:
+      guardrail: grounded_agent.grounding.WorkplaceGrounding
+      mode: post_call
+      default_on: false
+      judge_model: openai/fixture-judge
+      judge_api_base: os.environ/GROUNDING_FIXTURE_API_BASE
+      judge_api_key: fixture-only
+
+general_settings:
+  master_key: os.environ/LITELLM_API_KEY

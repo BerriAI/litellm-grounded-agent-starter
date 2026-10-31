@@ -1,0 +1,19 @@
+model_list:
+  - model_name: agent
+    litellm_params:
+      model: os.environ/AGENT_MODEL
+      api_key: os.environ/OPENAI_API_KEY
+
+guardrails:
+  - guardrail_name: answer-grounding
+    litellm_params:
+      guardrail: bedrock
+      mode: post_call
+      default_on: false
+      guardrailIdentifier: os.environ/BEDROCK_GUARDRAIL_ID
+      guardrailVersion: os.environ/BEDROCK_GUARDRAIL_VERSION
+      aws_region_name: os.environ/AWS_REGION_NAME
+      contextual_grounding_from_messages: true
+
+general_settings:
+  master_key: os.environ/LITELLM_API_KEY
